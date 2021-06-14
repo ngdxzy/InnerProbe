@@ -1,0 +1,40 @@
+{
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0.19  2019-03-26 bk=1.5019 VDI=41 GEI=35 GUI=JA:9.0 non-TLS
+#  -string -flagsOSRD
+preplace port data_out -pg 1 -lvl 4 -x 1420 -y 870 -defaultsOSRD
+preplace port reset -pg 1 -lvl 0 -x 0 -y 360 -defaultsOSRD
+preplace port xor_out -pg 1 -lvl 4 -x 1420 -y 1010 -defaultsOSRD
+preplace inst AXI_DELAY_0 -pg 1 -lvl 3 -x 1220 -y 340 -defaultsOSRD
+preplace inst AXI_ProbeDetector_0 -pg 1 -lvl 3 -x 1220 -y 540 -defaultsOSRD
+preplace inst AXI_Signal_Delay_0 -pg 1 -lvl 3 -x 1220 -y 120 -defaultsOSRD
+preplace inst CapLoad -pg 1 -lvl 3 -x 1220 -y 1010 -defaultsOSRD
+preplace inst DST_reg_0 -pg 1 -lvl 3 -x 1220 -y 870 -defaultsOSRD
+preplace inst SRC_reg_0 -pg 1 -lvl 2 -x 820 -y 700 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 2 -x 820 -y 540 -defaultsOSRD
+preplace inst ps8_0_axi_periph -pg 1 -lvl 2 -x 820 -y 290 -defaultsOSRD
+preplace inst rst_clk_wiz_0_100M -pg 1 -lvl 1 -x 320 -y 380 -defaultsOSRD
+preplace inst zynq_ultra_ps_e_0 -pg 1 -lvl 1 -x 320 -y 190 -defaultsOSRD
+preplace netloc AXI_DELAY_0_signal_out 1 2 2 1040 230 1400
+preplace netloc AXI_ProbeDetector_0_trigger_data_out 1 1 3 670 620 970J 650 1400
+preplace netloc AXI_Signal_Delay_0_signal_out 1 2 2 1030 10 1400
+preplace netloc Cap_0_xor_out 1 3 1 NJ 1010
+preplace netloc DST_reg_0_data_out 1 3 1 NJ 870
+preplace netloc SRC_reg_0_data_out 1 2 1 1020 170n
+preplace netloc clk_wiz_0_locked 1 0 3 20 480 620 780 1010
+preplace netloc clk_wiz_0_refclk 1 2 1 1000 90n
+preplace netloc clk_wiz_0_system_clk 1 0 3 20 100 660 100 990
+preplace netloc reset_1 1 0 1 N 360
+preplace netloc rst_clk_wiz_0_100M_peripheral_aresetn 1 1 2 650 90 980
+preplace netloc zynq_ultra_ps_e_0_pl_clk0 1 1 1 640 220n
+preplace netloc zynq_ultra_ps_e_0_pl_resetn0 1 1 1 630 200n
+preplace netloc ps8_0_axi_periph_M00_AXI 1 2 1 970 70n
+preplace netloc ps8_0_axi_periph_M02_AXI 1 2 1 970 310n
+preplace netloc ps8_0_axi_periph_M01_AXI 1 2 1 N 290
+preplace netloc zynq_ultra_ps_e_0_M_AXI_HPM0_FPD 1 1 1 N 160
+preplace netloc zynq_ultra_ps_e_0_M_AXI_HPM1_FPD 1 1 1 N 180
+levelinfo -pg 1 0 320 820 1220 1420
+pagesize -pg 1 -db -bbox -sgen -80 0 1530 1080
+"
+}
+0
