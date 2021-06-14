@@ -18,4 +18,4 @@ add_cells_to_pblock [get_pblocks pblock_dst_reg_reg] [get_cells -quiet [list Inn
 resize_pblock [get_pblocks pblock_dst_reg_reg] -add {SLICE_X64Y148:SLICE_X65Y148}
 create_pblock pblock_CapLoad
 add_cells_to_pblock [get_pblocks pblock_CapLoad] [get_cells -quiet [list InnerProbe_i/CapLoad]]
-resize_pblock [get_pblocks pblock_CapLoad] -add {SLICE_X64Y145:SLICE_X65Y147}
+resize_pblock [get_pblocks pblock_CapLoad] -add {SLICE_X64Y134:SLICE_X65Y136}

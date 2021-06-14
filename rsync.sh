@@ -9,3 +9,4 @@ find ./Src/*.srcs -name *.hwh -type f -exec cp {} ./Mcs \;
 sed 's/\.\/${_xil_proj_name_}/\.\.\/Work/g' ./Scripts/create_prj.tcl > ./Scripts/temp.tcl
 cat ./Scripts/temp.tcl > ./Scripts/create_prj.tcl
 rm ./Scripts/temp.tcl
+git add .

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Jun 14 10:00:00 2021" VIVADOVERSION="2019.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Jun 14 15:02:43 2021" VIVADOVERSION="2019.1">
 
   <SYSTEMINFO ARCH="zynquplus" BOARD="xilinx.com:zcu104:part0:1.1" DEVICE="xczu7ev" NAME="InnerProbe" PACKAGE="ffvc1156" SPEEDGRADE="-2"/>
 
@@ -250,7 +250,7 @@
     <MODULE COREREVISION="6" FULLNAME="/CapLoad/Cap_0" HWVERSION="1.0" INSTANCE="CapLoad_Cap_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="Cap" VLNV="xilinx.com:user:Cap:1.0">
       <DOCUMENTS/>
       <PARAMETERS>
-        <PARAMETER NAME="FF_NUM" VALUE="16"/>
+        <PARAMETER NAME="FF_NUM" VALUE="1"/>
         <PARAMETER NAME="Component_Name" VALUE="InnerProbe_Cap_0_0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
@@ -287,19 +287,6 @@
             <CONNECTION INSTANCE="External_Ports" PORT="xor_out"/>
           </CONNECTIONS>
         </PORT>
-      </PORTS>
-      <BUSINTERFACES/>
-    </MODULE>
-    <MODULE COREREVISION="6" FULLNAME="/CapLoad/xlconstant_1" HWVERSION="1.1" INSTANCE="CapLoad_xlconstant_1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:1.1">
-      <DOCUMENTS/>
-      <PARAMETERS>
-        <PARAMETER NAME="CONST_WIDTH" VALUE="1"/>
-        <PARAMETER NAME="CONST_VAL" VALUE="0x1"/>
-        <PARAMETER NAME="Component_Name" VALUE="InnerProbe_xlconstant_0_2"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT DIR="O" LEFT="0" NAME="dout" RIGHT="0" SIGIS="undef"/>
       </PORTS>
       <BUSINTERFACES/>
     </MODULE>
