@@ -194,7 +194,7 @@ module AXI_ProbeDetector#(
     
     assign start_test = (NATIVE_ADDR == 1'b0) & (NATIVE_EN == 1'b1) & (NATIVE_WR == 1'b0);
 
-    always @ (posedge shifting_clk or negedge S_AXI_aresetn) begin
+    always @ (posedge NATIVE_CLK or negedge S_AXI_aresetn) begin
         if(~S_AXI_aresetn) begin
             state <= IDLE;
         end // if(~S_AXI_aresetn)
@@ -203,7 +203,7 @@ module AXI_ProbeDetector#(
         end
     end
 
-    always @ (posedge shifting_clk or negedge S_AXI_aresetn) begin
+    always @ (posedge NATIVE_CLK or negedge S_AXI_aresetn) begin
         if(~S_AXI_aresetn) begin
             p_counter_latch <= 14'd0;
         end // if(~S_AXI_aresetn)
@@ -214,7 +214,7 @@ module AXI_ProbeDetector#(
         end
     end
 
-    always @ (posedge shifting_clk or negedge S_AXI_aresetn) begin
+    always @ (posedge NATIVE_CLK or negedge S_AXI_aresetn) begin
         if(~S_AXI_aresetn) begin
             new_data <= 1'd0;
         end // if(~S_AXI_aresetn)
@@ -230,19 +230,24 @@ module AXI_ProbeDetector#(
         end
     end
 
-    always @ (posedge shifting_clk or negedge S_AXI_aresetn) begin
+    always @ (posedge NATIVE_CLK or negedge S_AXI_aresetn) begin
         if(~S_AXI_aresetn) begin
-            ff_metastable <= 1'b0;
             synchronizer <= 1'b0;
         end // if(~S_AXI_aresetn)
         else begin
-            ff_metastable <= probe_signal_in;
             synchronizer <= ff_metastable;
         end
     end
-
-    assign main_counter_next = main_counter - 1;
     always @ (posedge shifting_clk or negedge S_AXI_aresetn) begin
+        if(~S_AXI_aresetn) begin
+            ff_metastable <= 1'b0;
+        end // if(~S_AXI_aresetn)
+        else begin
+            ff_metastable <= probe_signal_in;
+        end
+    end
+    assign main_counter_next = main_counter - 1;
+    always @ (posedge NATIVE_CLK or negedge S_AXI_aresetn) begin
         if(~S_AXI_aresetn) begin
             main_counter <= 0;
         end // if(~S_AXI_aresetn)
@@ -259,7 +264,7 @@ module AXI_ProbeDetector#(
     end
 
     assign p_counter_next = p_counter + (synchronizer & count);
-    always @ (posedge shifting_clk or negedge S_AXI_aresetn) begin
+    always @ (posedge NATIVE_CLK or negedge S_AXI_aresetn) begin
         if(~S_AXI_aresetn) begin
             p_counter <= 0;
         end // if(~S_AXI_aresetn)
@@ -296,7 +301,7 @@ module AXI_ProbeDetector#(
             end // TRIG:
             NOP1:begin
                 trigger_data_out = 1'b0;
-                next_state = NOP2;
+                next_state = CONT;
             end // NOP1:
             NOP2:begin
                 trigger_data_out = 1'b0;
@@ -328,4 +333,6 @@ module AXI_ProbeDetector#(
             end
         endcase // state
     end // always @ (*)
+
+
 endmodule
