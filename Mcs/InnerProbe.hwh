@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Jun 14 15:02:43 2021" VIVADOVERSION="2019.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Jun 14 18:26:26 2021" VIVADOVERSION="2019.1">
 
   <SYSTEMINFO ARCH="zynquplus" BOARD="xilinx.com:zcu104:part0:1.1" DEVICE="xczu7ev" NAME="InnerProbe" PACKAGE="ffvc1156" SPEEDGRADE="-2"/>
 
   <EXTERNALPORTS>
-    <PORT DIR="O" LEFT="0" NAME="data_out" RIGHT="0" SIGIS="undef" SIGNAME="DST_sys_AXI_Signal_Delay_0_signal_out">
+    <PORT DIR="O" LEFT="0" NAME="data_out" RIGHT="0" SIGIS="undef" SIGNAME="DST_sys_AXI_DELAY_0_signal_out">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="DST_sys_AXI_Signal_Delay_0" PORT="signal_out"/>
+        <CONNECTION INSTANCE="DST_sys_AXI_DELAY_0" PORT="signal_out"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="reset" SIGIS="rst" SIGNAME="External_Ports_reset">
@@ -430,7 +430,7 @@
         </PORT>
         <PORT DIR="O" NAME="signal_out" SIGIS="undef" SIGNAME="DST_sys_AXI_DELAY_0_signal_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="DST_sys_AXI_Signal_Delay_0" PORT="signal_in"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="data_out"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="IDELAYCTRL_RST" SIGIS="rst"/>
@@ -634,9 +634,9 @@
             <CONNECTION INSTANCE="SRC_reg_0" PORT="data_in"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="probe_signal_in" SIGIS="undef" SIGNAME="SRC_reg_0_data_out">
+        <PORT DIR="I" NAME="probe_signal_in" SIGIS="undef" SIGNAME="DST_sys_AXI_Signal_Delay_0_signal_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="SRC_reg_0" PORT="data_out"/>
+            <CONNECTION INSTANCE="DST_sys_AXI_Signal_Delay_0" PORT="signal_out"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -704,8 +704,8 @@
       </ADDRESSBLOCKS>
       <PARAMETERS>
         <PARAMETER NAME="S_AXI_DATA_WIDTH" VALUE="32"/>
-        <PARAMETER NAME="REFCLK_FREQUENCY" VALUE="300"/>
-        <PARAMETER NAME="MODE" VALUE="COUNT"/>
+        <PARAMETER NAME="REFCLK_FREQUENCY" VALUE="266"/>
+        <PARAMETER NAME="MODE" VALUE="TIME"/>
         <PARAMETER NAME="DELAY_ELEMENTS" VALUE="1"/>
         <PARAMETER NAME="NATIVE_ADDR_WDITH" VALUE="2"/>
         <PARAMETER NAME="NATIVE_DATA_WIDTH" VALUE="9"/>
@@ -832,17 +832,21 @@
             <CONNECTION INSTANCE="ps8_0_axi_periph" PORT="M00_AXI_wstrb"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="0" NAME="signal_in" RIGHT="0" SIGIS="undef" SIGNAME="DST_sys_AXI_DELAY_0_signal_out">
+        <PORT DIR="I" LEFT="0" NAME="signal_in" RIGHT="0" SIGIS="undef" SIGNAME="SRC_reg_0_data_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="DST_sys_AXI_DELAY_0" PORT="signal_out"/>
+            <CONNECTION INSTANCE="SRC_reg_0" PORT="data_out"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="0" NAME="signal_out" RIGHT="0" SIGIS="undef" SIGNAME="DST_sys_AXI_Signal_Delay_0_signal_out">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="data_out"/>
+            <CONNECTION INSTANCE="DST_sys_AXI_ProbeDetector_0" PORT="probe_signal_in"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="IDELAYCTRL_RST" SIGIS="rst"/>
+        <PORT DIR="O" NAME="IDELAYCTRL_RST" SIGIS="rst" SIGNAME="DST_sys_AXI_Signal_Delay_0_IDELAYCTRL_RST">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="DST_sys_util_idelay_ctrl_0" PORT="rst"/>
+          </CONNECTIONS>
+        </PORT>
       </PORTS>
       <BUSINTERFACES>
         <BUSINTERFACE BUSNAME="ps8_0_axi_periph_M00_AXI" DATAWIDTH="32" NAME="S_AXI_SIGDELAY" TYPE="SLAVE" VLNV="xilinx.com:interface:aximm:1.0">
@@ -900,6 +904,28 @@
           </PORTMAPS>
         </BUSINTERFACE>
       </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="1" FULLNAME="/DST_sys/util_idelay_ctrl_0" HWVERSION="1.0" INSTANCE="DST_sys_util_idelay_ctrl_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="util_idelay_ctrl" VLNV="xilinx.com:ip:util_idelay_ctrl:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="SIM_DEVICE" VALUE="ULTRASCALE"/>
+        <PARAMETER NAME="Component_Name" VALUE="InnerProbe_util_idelay_ctrl_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="rst" SIGIS="rst" SIGNAME="DST_sys_AXI_Signal_Delay_0_IDELAYCTRL_RST">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="DST_sys_AXI_Signal_Delay_0" PORT="IDELAYCTRL_RST"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="rdy" SIGIS="undef"/>
+        <PORT CLKFREQUENCY="266666666" DIR="I" NAME="ref_clk" SIGIS="clk" SIGNAME="clk_wiz_0_refclk">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="clk_wiz_0" PORT="refclk"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
     </MODULE>
     <MODULE COREREVISION="6" FULLNAME="/DST_sys/xlconstant_0" HWVERSION="1.1" INSTANCE="DST_sys_xlconstant_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:1.1">
       <DOCUMENTS/>
@@ -970,7 +996,7 @@
           <CONNECTIONS>
             <CONNECTION INSTANCE="CapLoad_Cap_0" PORT="probe_signal"/>
             <CONNECTION INSTANCE="DST_sys_AXI_ProbeDetector_0" PORT="data_in"/>
-            <CONNECTION INSTANCE="DST_sys_AXI_ProbeDetector_0" PORT="probe_signal_in"/>
+            <CONNECTION INSTANCE="DST_sys_AXI_Signal_Delay_0" PORT="signal_in"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -1054,7 +1080,7 @@
         <PARAMETER NAME="C_OUTCLK_SUM_ROW0A" VALUE="Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase"/>
         <PARAMETER NAME="C_OUTCLK_SUM_ROW0B" VALUE="Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)"/>
         <PARAMETER NAME="C_OUTCLK_SUM_ROW1" VALUE="system_clk___100.000______0.000______50.0_______89.220_____78.394"/>
-        <PARAMETER NAME="C_OUTCLK_SUM_ROW2" VALUE="__refclk___100.000______0.000______50.0_______89.220_____78.394"/>
+        <PARAMETER NAME="C_OUTCLK_SUM_ROW2" VALUE="__refclk___266.667______0.000______50.0_______74.771_____78.394"/>
         <PARAMETER NAME="C_OUTCLK_SUM_ROW3" VALUE="shift_clk___100.000______0.000______50.0_______89.220_____78.394"/>
         <PARAMETER NAME="C_OUTCLK_SUM_ROW4" VALUE="no_CLK_OUT4_output"/>
         <PARAMETER NAME="C_OUTCLK_SUM_ROW5" VALUE="no_CLK_OUT5_output"/>
@@ -1082,7 +1108,7 @@
         <PARAMETER NAME="C_CLKOUT6_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
         <PARAMETER NAME="C_CLKOUT7_REQUESTED_DUTY_CYCLE" VALUE="50.000"/>
         <PARAMETER NAME="C_CLKOUT1_OUT_FREQ" VALUE="100.000"/>
-        <PARAMETER NAME="C_CLKOUT2_OUT_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT2_OUT_FREQ" VALUE="266.667"/>
         <PARAMETER NAME="C_CLKOUT3_OUT_FREQ" VALUE="100.000"/>
         <PARAMETER NAME="C_CLKOUT4_OUT_FREQ" VALUE="100.000"/>
         <PARAMETER NAME="C_CLKOUT5_OUT_FREQ" VALUE="100.000"/>
@@ -1124,7 +1150,7 @@
         <PARAMETER NAME="C_MMCM_REF_JITTER2" VALUE="0.010"/>
         <PARAMETER NAME="C_MMCM_STARTUP_WAIT" VALUE="FALSE"/>
         <PARAMETER NAME="C_MMCM_CLKOUT0_DIVIDE_F" VALUE="16.000"/>
-        <PARAMETER NAME="C_MMCM_CLKOUT1_DIVIDE" VALUE="16"/>
+        <PARAMETER NAME="C_MMCM_CLKOUT1_DIVIDE" VALUE="6"/>
         <PARAMETER NAME="C_MMCM_CLKOUT2_DIVIDE" VALUE="16"/>
         <PARAMETER NAME="C_MMCM_CLKOUT3_DIVIDE" VALUE="16"/>
         <PARAMETER NAME="C_MMCM_CLKOUT4_DIVIDE" VALUE="16"/>
@@ -1282,7 +1308,7 @@
         <PARAMETER NAME="C_CLKOUT6_MATCHED_ROUTING" VALUE="false"/>
         <PARAMETER NAME="C_CLKOUT7_MATCHED_ROUTING" VALUE="false"/>
         <PARAMETER NAME="C_CLKOUT0_ACTUAL_FREQ" VALUE="100.000"/>
-        <PARAMETER NAME="C_CLKOUT1_ACTUAL_FREQ" VALUE="100.000"/>
+        <PARAMETER NAME="C_CLKOUT1_ACTUAL_FREQ" VALUE="266.667"/>
         <PARAMETER NAME="C_CLKOUT2_ACTUAL_FREQ" VALUE="100.000"/>
         <PARAMETER NAME="C_CLKOUT3_ACTUAL_FREQ" VALUE="100.000"/>
         <PARAMETER NAME="C_CLKOUT4_ACTUAL_FREQ" VALUE="100.000"/>
@@ -1451,7 +1477,7 @@
         <PARAMETER NAME="MMCM_CLKOUT0_DUTY_CYCLE" VALUE="0.500"/>
         <PARAMETER NAME="MMCM_CLKOUT0_PHASE" VALUE="0.000"/>
         <PARAMETER NAME="MMCM_CLKOUT0_USE_FINE_PS" VALUE="false"/>
-        <PARAMETER NAME="MMCM_CLKOUT1_DIVIDE" VALUE="16"/>
+        <PARAMETER NAME="MMCM_CLKOUT1_DIVIDE" VALUE="6"/>
         <PARAMETER NAME="MMCM_CLKOUT1_DUTY_CYCLE" VALUE="0.500"/>
         <PARAMETER NAME="MMCM_CLKOUT1_PHASE" VALUE="0.000"/>
         <PARAMETER NAME="MMCM_CLKOUT1_USE_FINE_PS" VALUE="false"/>
@@ -1603,10 +1629,11 @@
             <CONNECTION INSTANCE="ps8_0_axi_periph" PORT="M03_ACLK"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="100000000" DIR="O" NAME="refclk" SIGIS="clk" SIGNAME="clk_wiz_0_refclk">
+        <PORT CLKFREQUENCY="266666666" DIR="O" NAME="refclk" SIGIS="clk" SIGNAME="clk_wiz_0_refclk">
           <CONNECTIONS>
             <CONNECTION INSTANCE="DST_sys_AXI_Signal_Delay_0" PORT="REFCLK"/>
             <CONNECTION INSTANCE="DST_sys_AXI_DELAY_0" PORT="REFCLK"/>
+            <CONNECTION INSTANCE="DST_sys_util_idelay_ctrl_0" PORT="ref_clk"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="100000000" DIR="O" NAME="shift_clk" SIGIS="clk" SIGNAME="clk_wiz_0_shift_clk">
