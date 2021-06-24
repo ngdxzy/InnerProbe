@@ -296,7 +296,7 @@ module AXI_ProbeDetector#(
             end // TRIG:
             NOP1:begin
                 trigger_data_out = 1'b0;
-                next_state = NOP2;
+                next_state = CONT;
             end // NOP1:
             NOP2:begin
                 trigger_data_out = 1'b0;
