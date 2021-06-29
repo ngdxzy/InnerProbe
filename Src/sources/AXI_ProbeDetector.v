@@ -61,10 +61,11 @@ module AXI_ProbeDetector#(
     input system_clk,
     input shifting_clk,
 
-    input data_in,
+    input [3:0]data_in,
 
     output reg trigger_data_out,
-    input probe_signal_in
+    input probe_signal_in,
+    output reg [3:0] sw
 
     );
 
@@ -90,11 +91,12 @@ module AXI_ProbeDetector#(
     (* dont_touch="true" *)(* max_fanout=1 *)(* ASYNC_REG="true" *)reg ff_metastable;
     (* dont_touch="true" *)(* max_fanout=2 *)(* ASYNC_REG="true" *)reg synchronizer;
 
-    (* dont_touch="true" *) reg dst_reg;
+    (* dont_touch="true" *) reg [3:0]dst_reg;
 
     reg busy;
 
     wire start_test;
+    wire change_sw;
     reg [7:0] state,next_state;
 
     reg load_counter;
@@ -174,7 +176,7 @@ module AXI_ProbeDetector#(
                 NATIVE_READY <= NATIVE_WR?NATIVE_EN:(new_data & busy);
             end
             1'b1: begin
-                NATIVE_READY <= NATIVE_EN | dst_reg;
+                NATIVE_READY <= NATIVE_EN | dst_reg[0];
             end
         endcase
     end
@@ -193,6 +195,19 @@ module AXI_ProbeDetector#(
     end
     
     assign start_test = (NATIVE_ADDR == 1'b0) & (NATIVE_EN == 1'b1) & (NATIVE_WR == 1'b0);
+    assign change_sw = (NATIVE_ADDR == 1'b1) & (NATIVE_EN == 1'b1) & (NATIVE_WR == 1'b1);
+
+    always @ (posedge NATIVE_CLK) begin
+        if(~S_AXI_aresetn) begin
+            sw <= 0;
+        end // if(~S_AXI_aresetn)
+        else begin
+            if(change_sw) begin
+                sw <= NATIVE_DATA_IN[3:0];
+            end
+
+        end
+    end
 
     always @ (posedge shifting_clk or negedge S_AXI_aresetn) begin
         if(~S_AXI_aresetn) begin

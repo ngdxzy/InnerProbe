@@ -1,7 +1,8 @@
 exec wsl ./cleanup.sh
 #Synthesis cap 1
 startgroup
-set_property -dict [list CONFIG.FF_NUM {1}] [get_bd_cells CapLoad/Cap_0]
+set_property -dict [list CONFIG.FF_NUM {2}] [get_bd_cells CapLoad/Cap_0]
+set_property -dict [list CONFIG.FF_NUM {2}] [get_bd_cells CapLoad/Cap_1]
 endgroup
 save_bd_design
 reset_run synth_1
@@ -10,51 +11,8 @@ wait_on_run synth_1
 
 open_run synth_1 -name synth_1
 
-write_checkpoint -cell InnerProbe_i/CapLoad ./cell_cap1.dcp
-close_design
+write_checkpoint -cell InnerProbe_i/CapLoad ./cell_probed.dcp
 
-#Synthesis cap 4
-startgroup
-set_property -dict [list CONFIG.FF_NUM {4}] [get_bd_cells CapLoad/Cap_0]
-endgroup
-save_bd_design
-reset_run synth_1
-launch_runs synth_1 -jobs 4
-wait_on_run synth_1
-
-open_run synth_1 -name synth_1
-
-write_checkpoint -cell InnerProbe_i/CapLoad ./cell_cap4.dcp
-close_design
-
-#Synthesis cap 8
-startgroup
-set_property -dict [list CONFIG.FF_NUM {8}] [get_bd_cells CapLoad/Cap_0]
-endgroup
-save_bd_design
-reset_run synth_1
-launch_runs synth_1 -jobs 4
-wait_on_run synth_1
-
-open_run synth_1 -name synth_1
-
-write_checkpoint -cell InnerProbe_i/CapLoad ./cell_cap8.dcp
-close_design
-
-#Synthesis cap 16
-startgroup
-set_property -dict [list CONFIG.FF_NUM {16}] [get_bd_cells CapLoad/Cap_0]
-endgroup
-save_bd_design
-reset_run synth_1
-launch_runs synth_1 -jobs 4
-wait_on_run synth_1
-
-open_run synth_1 -name synth_1
-
-write_checkpoint -cell InnerProbe_i/CapLoad ./cell_cap16.dcp
-
-#do PR settings
 set_property HD.RECONFIGURABLE 1 [get_cells InnerProbe_i/CapLoad]
 #do PR Rules check
 create_drc_ruledeck ruledeck_1
@@ -65,75 +23,35 @@ report_drc -name drc_1 -ruledecks {ruledeck_1}
 opt_design
 place_design
 route_design
+
+
+
 #clean up partial region
 update_design -cells InnerProbe_i/CapLoad -black_box
 lock_design -level routing
 
 write_checkpoint ./routed_static.dcp -force
 
-#route cap1
-read_checkpoint -cell InnerProbe_i/CapLoad ./cell_cap1.dcp
+read_checkpoint -cell InnerProbe_i/CapLoad ./cell_probed.dcp
 
 opt_design
 place_design
 route_design
 
-write_checkpoint ./routed_cap1.dcp -force
+write_checkpoint ./routed_probed.dcp -force
 
-#route cap4
-update_design -cells InnerProbe_i/CapLoad -black_box
-read_checkpoint -cell InnerProbe_i/CapLoad ./cell_cap4.dcp
-
-opt_design
-place_design
-route_design
-
-write_checkpoint ./routed_cap4.dcp -force
-
-#route cap8
-update_design -cells InnerProbe_i/CapLoad -black_box
-read_checkpoint -cell InnerProbe_i/CapLoad ./cell_cap8.dcp
-
-opt_design
-place_design
-route_design
-
-write_checkpoint ./routed_cap8.dcp -force
-
-#route cap16
-update_design -cells InnerProbe_i/CapLoad -black_box
-read_checkpoint -cell InnerProbe_i/CapLoad ./cell_cap16.dcp
-
-opt_design
-place_design
-route_design
-
-write_checkpoint ./routed_cap16.dcp -force
-
-
-#check compatibility
-pr_verify -initial ./routed_static.dcp -additional {./routed_cap1.dcp ./routed_cap4.dcp ./routed_cap8.dcp ./routed_cap16.dcp}
+pr_verify -initial ./routed_static.dcp -additional {./routed_probed.dcp} 
+#./routed_cap8.dcp ./routed_cap16.dcp}
 
 #write_bitstream
 open_checkpoint ./routed_static.dcp
 write_bitstream ./static.bit -force
 close_design
 
-open_checkpoint ./routed_cap1.dcp
+open_checkpoint ./routed_probed.dcp
 write_bitstream ./cap1.bit -force
 close_design
 
-open_checkpoint ./routed_cap4.dcp
-write_bitstream ./cap4.bit -force
-close_design
-
-open_checkpoint ./routed_cap8.dcp
-write_bitstream ./cap8.bit -force
-close_design
-
-open_checkpoint ./routed_cap16.dcp
-write_bitstream ./cap16.bit -force
-close_design
 
 close_design
 
