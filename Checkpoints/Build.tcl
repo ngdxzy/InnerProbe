@@ -1,4 +1,8 @@
 exec wsl ./cleanup.sh
+update_compile_order -fileset sources_1
+export_ip_user_files -of_objects  [get_files D:/vivado/ZCU104/InnerProbe/Checkpoints/*.dcp] -no_script -reset -force -quiet
+remove_files  D:/vivado/ZCU104/InnerProbe/Checkpoints/cell_*.dcp
+
 #Synthesis cap 1
 startgroup
 set_property -dict [list CONFIG.FF_NUM {2}] [get_bd_cells CapLoad/Cap_0]
@@ -41,7 +45,7 @@ route_design
 write_checkpoint ./routed_probed.dcp -force
 
 pr_verify -initial ./routed_static.dcp -additional {./routed_probed.dcp} 
-#./routed_cap8.dcp ./routed_cap16.dcp}
+#./routed_cap8.dcp ./routed_probed6.dcp}
 
 #write_bitstream
 open_checkpoint ./routed_static.dcp
@@ -49,7 +53,7 @@ write_bitstream ./static.bit -force
 close_design
 
 open_checkpoint ./routed_probed.dcp
-write_bitstream ./cap1.bit -force
+write_bitstream ./probed.bit -force
 close_design
 
 
