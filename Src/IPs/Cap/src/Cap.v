@@ -32,7 +32,7 @@ module Cap#(
     (* dont_touch="true" *)reg [FF_NUM-1:0] ff_load;
 
 
-    always @ (posedge clk or posedge rst_n) begin
+        always @ (posedge clk or negedge rst_n) begin
         if(~rst_n) begin
             ff_load = 'b0;
         end
